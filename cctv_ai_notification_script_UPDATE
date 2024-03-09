@@ -55,14 +55,7 @@ sequence:
           {{ generated_content['text'] == ' Camera has detected motion however
           no obvious motion observed comparing snapshots.' }} 
     then:
-      - service: notify.discord
-        data:
-          target:
-            - "{{DISCORD ID}}"
-          message: "{{generated_content['text'] }}"
-          data:
-            images: 
-              - ./www/snapshots/driveway_snapshot2.jpg   
+      - stop: "" 
     else:
       - service: notify.discord
         data:
