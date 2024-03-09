@@ -1,5 +1,13 @@
-# code-snippets
-Just a spot to put random stuff.
+# homeassistant-reolinkAI
+Firstly, thank you to the origin of this fork, and the home assistance community for making all this. 
+
+Prerequisites:
+Google Geenerative AI Conversation = link below
+Discord bot with write messages permissions:
+https://www.home-assistant.io/integrations/discord/
+
+Integration with a camera system - this was tested with reolink nvr, but should work with most. Manually create the automation for better results with your own camera system, using the cameras built in motion detection for best results. 
+
 
 ### RANDOM THING NO.1 ###########
 First up is this very rough and quick guide / starting point for your HA to take a cctv snapshot when motion is detected, then have the Google Generative AI Conversation integration to describe the snapshot, and then send a notification with said snapshot and description.
