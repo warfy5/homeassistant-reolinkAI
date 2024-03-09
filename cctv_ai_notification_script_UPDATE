@@ -1,6 +1,7 @@
 camera_name: driveway1  # Add your camera name here
 camera_device_id: ***YOUR_CAMERAS_DEVICE_ID***  # Add your camera's device ID here
 phone_id: ***** YOUR PHONE ID ********  # Add your phone ID here
+discord_channel_id: 123456789 #put your discord channel ID here. 
 
 alias: Camera - {{ camera_name }} - Snapshot, AI & Notification
 sequence:
@@ -68,4 +69,9 @@ sequence:
           message: "{{generated_content['text'] }}"
           data:
             image: /local/snapshots/{{ camera_name }}_snapshot2.jpg
+      - service: notify.discord
+        metadata: {}
+        data:
+          channel: {{ discord_channel_id }}
+          message: "{{generated_content['text'] }}"
 mode: single
