@@ -1,11 +1,15 @@
-alias: Camera - Driveway 1 - Snapshot, AI & Notification
+camera_name: driveway1  # Add your camera name here
+camera_device_id: ***YOUR_CAMERAS_DEVICE_ID***  # Add your camera's device ID here
+phone_id: ***** YOUR PHONE ID ********  # Add your phone ID here
+
+alias: Camera - {{ camera_name }} - Snapshot, AI & Notification
 sequence:
   - service: camera.snapshot
     metadata: {}
     data:
-      filename: ./www/snapshots/driveway1_snapshot1.jpg
+      filename: ./www/snapshots/{{ camera_name }}_snapshot1.jpg
     target:
-      device_id: ***YOUR_CAMERAS_DEVICE_ID***
+      device_id: {{ camera_device_id }}
     enabled: true
   - delay:
       hours: 0
@@ -16,9 +20,9 @@ sequence:
   - service: camera.snapshot
     metadata: {}
     data:
-      filename: ./www/snapshots/driveway1_snapshot2.jpg
+      filename: ./www/snapshots/{{ camera_name }}_snapshot2.jpg
     target:
-      device_id: ***YOUR_CAMERAS_DEVICE_ID***
+      device_id: {{ camera_device_id }}
     enabled: true
   - delay:
       hours: 0
@@ -29,25 +33,25 @@ sequence:
   - service: camera.snapshot
     metadata: {}
     data:
-      filename: ./www/snapshots/driveway1_snapshot3.jpg
+      filename: ./www/snapshots/{{ camera_name }}_snapshot3.jpg
     target:
-      device_id: ***YOUR_CAMERAS_DEVICE_ID***
+      device_id: {{ camera_device_id }}
     enabled: true
   - service: google_generative_ai_conversation.generate_content
     metadata: {}
     data:
       prompt: >-
         Motion has been detected, compare and very briefly describe what you see
-        in the following sequence of images from my driveway camera number 1.
+        in the following sequence of images from my {{ camera_name }} camera.
         What do you think caused the motion alarm? If a person or car is
         present, describe them in detail. Do not describe stationary objects or
         buildings. If you see no obvious causes of motion, reply with "Camera has
         detected motion however no obvious motion observed comparing snapshots".
         Your message needs to be short enough to fit in a phone notification. 
       image_filename:
-        - ./www/snapshots/driveway1_snapshot1.jpg
-        - ./www/snapshots/driveway1_snapshot2.jpg
-        - ./www/snapshots/driveway1_snapshot3.jpg
+        - ./www/snapshots/{{ camera_name }}_snapshot1.jpg
+        - ./www/snapshots/{{ camera_name }}_snapshot2.jpg
+        - ./www/snapshots/{{ camera_name }}_snapshot3.jpg
     response_variable: generated_content
   - if:
       - condition: template
@@ -57,11 +61,11 @@ sequence:
     then:
       - stop: ""
     else:
-      - service: notify.mobile ***** YOUR PHONE ID ********
+      - service: notify.mobile {{ phone_id }}
         metadata: {}
         data:
-          title: Driveway 1 Motion Detected
+          title: {{ camera_name }} Motion Detected
           message: "{{generated_content['text'] }}"
           data:
-            image: /local/snapshots/driveway1_snapshot2.jpg
+            image: /local/snapshots/{{ camera_name }}_snapshot2.jpg
 mode: single
