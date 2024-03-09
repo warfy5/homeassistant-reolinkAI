@@ -74,4 +74,5 @@ sequence:
         data:
           channel: {{ discord_channel_id }}
           message: "{{generated_content['text'] }}"
+          file: /local/snapshots/{{ camera_name }}_snapshot2.jpg
 mode: single
